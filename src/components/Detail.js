@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import vaccinatedUserServices from "../services/vaccinatedUser";
 import { useParams } from 'react-router-dom';
 import Moment from 'react-moment';
+import { BACKEND_URL } from '../constant'
 
 const Detail = () => {
     const [ user, setUser ] = useState(null)
@@ -33,7 +34,7 @@ const Detail = () => {
                 </div>
                 <div className="img-rounded-container">
                     {/* change DNS or ip */}
-                    <img className="img-rounded" src={`http://192.168.100.3:4000/${user.photo}`} alt="vaccinated person" />
+                    <img className="img-rounded" src={`${BACKEND_URL}/${user.photo}`} alt="vaccinated person" />
                 </div>
                 <div>
                     <table>
