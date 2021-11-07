@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import Landing from './components/Landing';
 import Admin from './Admin'
 import DetailQR from './components/DetailQR';
@@ -9,9 +9,6 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path="/landing">
-          <Landing />
-        </Route>
         <Route path="/users/:id">
           <DetailQR />
           </Route>
@@ -22,7 +19,7 @@ function App() {
           <Login />
         </Route>
         <Route path="/">
-          <Redirect to="/landing" />
+          <Landing />
         </Route>
       </Switch>
     </div>

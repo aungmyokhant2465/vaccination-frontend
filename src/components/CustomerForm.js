@@ -14,7 +14,13 @@ const CustomerForm = () => {
     const [ vaccineSecondDate, setVaccineSecondDate ] = useState('')
     const [ phone, setPhone ] = useState('')
     const [ note, setNote ] = useState('')
-    const [ profile, setProfile ] = useState('')
+    const [ photo, setPhoto ] = useState('')
+    const [ position, setPosition ] = useState('')
+    const [ department, setDepartment ] = useState('')
+    const [ company, setCompany ] = useState('')
+    const [ joinDate, setJoinDate ] = useState('')
+
+    const [ progress, setProgress ] = useState(false)
 
     const [noti, setNoti] = useState({})
 
@@ -28,7 +34,7 @@ const CustomerForm = () => {
 
     const handleForm = async (e) => {
         e.preventDefault()
-        if(!profile||!dob||!nrc||!address||!vaccineFirstDate||!phone){
+        if(!photo||!dob||!nrc||!address||!vaccineFirstDate||!phone){
             setTimeout(() => {
                 setNoti({})
             }, 3000);
@@ -36,12 +42,13 @@ const CustomerForm = () => {
             return
         }
         let newVaccinatedUser = {
-            username: `${firstName} ${lastName}`,
-            nrc, dob, gender, address, vaccineFirstDate, vaccineSecondDate, phone, note
+            username: `${firstName} ${lastName}`, nrc, dob, gender, address,
+            vaccineFirstDate, vaccineSecondDate, phone, note, position, department, company, joinDate
         }
+        setProgress(true)
         try {
             const formData = new FormData()
-            formData.append('file', profile)
+            formData.append('file', photo)
             const uploadedFile = await vaccinatedUserService.imageUpload(formData)
             if(uploadedFile.error === true) {
                 setTimeout(() => {
@@ -50,7 +57,7 @@ const CustomerForm = () => {
                 setNoti(uploadedFile)
                 return
             }
-            newVaccinatedUser = { ...newVaccinatedUser, profile: uploadedFile.file.filename }
+            newVaccinatedUser = { ...newVaccinatedUser, photo: uploadedFile.file.filename }
             const result = await vaccinatedUserService.createVaccinatedUser(newVaccinatedUser)
             setTimeout(() => {
                 setNoti({})
@@ -66,10 +73,15 @@ const CustomerForm = () => {
             setVaccineSecondDate('')
             setPhone('')
             setNote('')
-            setProfile('')
+            setPhoto('')
+            setPosition('')
+            setDepartment('')
+            setCompany('')
+            setJoinDate('')
         } catch(error) {
             console.error(error)
         }
+        setProgress(false)
     }
 
     return (
@@ -94,9 +106,9 @@ const CustomerForm = () => {
                         </div>
                         {/* accept="image/*" */}
                         <div className="form-group">
-                            <label htmlFor="profile">Profile :</label>
-                            <input id="profile" name="profile" type="file" required placeholder="Enter your image" 
-                             onChange={({target}) => setProfile(target.files[0])} accept="image/*"
+                            <label htmlFor="photo">Photo :</label>
+                            <input id="photo" name="photo" type="file" required placeholder="Enter your image" 
+                             onChange={({target}) => setPhoto(target.files[0])} accept="image/*"
                             />
                         </div>
                         <div className="form-group">
@@ -126,6 +138,30 @@ const CustomerForm = () => {
                             />
                         </div>
                         <div className="form-group">
+                            <label htmlFor="position">Position :</label>
+                            <input id="position" name="position" type="text" placeholder="Enter your position"
+                                value={position} onChange={({target}) => setPosition(target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="department">Department :</label>
+                            <input id="department" name="department" type="text" placeholder="Enter your department"
+                                value={department} onChange={({target}) => setDepartment(target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="company">Comapny :</label>
+                            <input id="company" name="company" type="text" placeholder="Enter your comapny name"
+                                value={company} onChange={({target}) => setCompany(target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="joinDate">Join Date :</label>
+                            <input id="joinDate" name="joinDate" type="date" placeholder="Joined date (mm/dd/yyyy)" 
+                                value={joinDate} onChange={({target}) => setJoinDate(target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
                             <label htmlFor="vaccineFirstDate">Vaccinated first date :</label>
                             <input id="vaccineFirstDate" name="vaccineFirstDate" required type="date" placeholder="your vaccinated first date (mm/dd/yyyy)" 
                                 value={vaccineFirstDate} onChange={({target}) => setVaccineFirstDate(target.value)}
@@ -150,7 +186,11 @@ const CustomerForm = () => {
                     </form>
                     <div className="generator-group">
                         <span className="material-icons md-36 form">qr_code_2</span>
-                        <button type="submit" form="customer-form" className="btn">QR Generate</button>
+                        <button disabled={progress} type="submit" form="customer-form" className="btn">
+                            {
+                                !progress ? 'QR Generate': 'Processing...'
+                            }
+                        </button>
                     </div>
                 </section>
             </div>

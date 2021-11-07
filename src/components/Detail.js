@@ -32,8 +32,8 @@ const Detail = () => {
                     <h2>VACCINATION ID</h2>
                 </div>
                 <div className="img-rounded-container">
-                    {/* <span className="material-icons md-80">account_circle</span> */}
-                    <img className="img-rounded" src={`http://192.168.100.3:4000/${user.profile}`} alt="profile" />
+                    {/* change DNS or ip */}
+                    <img className="img-rounded" src={`http://192.168.100.3:4000/${user.photo}`} alt="vaccinated person" />
                 </div>
                 <div>
                     <table>
@@ -53,6 +53,22 @@ const Detail = () => {
                             <tr>
                                 <th>Gender</th>
                                 <td>{user.gender}</td>
+                            </tr>
+                            <tr>
+                                <th>Position</th>
+                                <td>{user.position}</td>
+                            </tr>
+                            <tr>
+                                <th>Department</th>
+                                <td>{user.department}</td>
+                            </tr>
+                            <tr>
+                                <th>Company</th>
+                                <td>{user.company}</td>
+                            </tr>
+                            <tr>
+                                <th>Joined Date</th>
+                                <td><Moment date={user.joinDate} format="MMM DD YYYY" /></td>
                             </tr>
                             <tr>
                                 <th>Vaccinated First Date</th>

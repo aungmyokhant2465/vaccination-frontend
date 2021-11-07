@@ -4,14 +4,14 @@ import image1 from '../asset/images/images.jpeg'
 import image2 from '../asset/images/images2.jpg'
 import image3 from '../asset/images/images3.jpg'
 import image4 from '../asset/images/images5.jpeg'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 
 const Landing = () => {
     return (
         <div className="home-container">
             <div className="home-nav">
-                <ul>
+                {/* <ul>
                     <li>
                         <Link to="/new">
                             Create
@@ -32,7 +32,7 @@ const Landing = () => {
                             Report
                         </Link>
                     </li>
-                </ul>
+                </ul> */}
             </div>
             <div className="img-container">
                 <div>
@@ -75,7 +75,7 @@ const Landing = () => {
                 <div>
                     <h3>Menu</h3>
                     <ul>
-                        <li>
+                        {/* <li>
                             <Link to="/new">
                                 Create
                             </Link>
@@ -94,7 +94,7 @@ const Landing = () => {
                             <Link to="/">
                                 Report
                             </Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </footer>
