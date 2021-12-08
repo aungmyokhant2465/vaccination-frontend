@@ -1,41 +1,41 @@
-.alert-container {
+.alert-content {
     background-color: grey;
     border-radius: 10px;
     position: fixed;
     transition: all .5s ease-out;
 }
 
-.alert-container > div {
+.alert-content > div {
     padding: 1em;
     border-bottom: 1px solid rgb(156, 152, 152);
 }
 
-.alert-container > div:nth-child(1) h3 {
+.alert-content > div:nth-child(1) h3 {
     padding: 0;
     margin: 0;
 }
 
-.alert-container > div:nth-child(2) {
+.alert-content > div:nth-child(2) {
     padding-block: 2em;
 }
 
-.alert-container > div:nth-child(3) {
+.alert-content > div:nth-child(3) {
     text-align: right;
 }
 
-.alert-container > div:nth-child(3) button {
+.alert-content > div:nth-child(3) button {
     border-radius: 20px;
     padding: 10px;
     margin: 5px;
     border: 0;
 }
 
-.alert-container button:hover, .alert-container button:focus {
+.alert-content button:hover, .alert-content button:focus {
     background-color: #ccaaaa;
     color: black;
 }
 
-.alert-container button:active {
+.alert-content button:active {
     background-color: #e4c4c4;
 }
 
@@ -45,6 +45,7 @@
     scale: 1;
     top: 40vh;
     left: 50vw;
+    
 }
 
 .hide {

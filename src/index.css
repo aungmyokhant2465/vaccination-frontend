@@ -204,16 +204,16 @@ time {
   position: relative;
 }
 
-.customer-container .date {
+.customer-container .date, .product-container .date {
   padding-inline-start: 12px;
 }
 
-.customer-container > ul {
+.customer-container > ul, .product-container > ul {
   list-style-type: 0;
   padding: 0;
 }
 
-.customer-container li {
+.customer-container li, .product-container li {
   padding: 1em;
   margin-block: 2em;
   padding-inline: 3em;
@@ -223,7 +223,7 @@ time {
   align-items: center;
 }
 
-.customer-container li > div > * {
+.customer-container li > div > *, .product-container li > div > * {
   display: block;
   margin-block: 10px;
   text-align: center;
@@ -234,11 +234,11 @@ time {
   font-weight: bold;
 }
 
-.detail-link {
+.detail-edit-link {
   color: #FF8484;
 }
 
-.detail-link:hover, .detail-link:focus {
+.detail-edit-link:hover, .detail-edit-link:focus {
   color: #ad3232;
 }
 
@@ -272,6 +272,10 @@ time {
   margin: 0 auto;
 }
 
+/* .detail-container > div {
+  margin: 0 auto;
+} */
+
 .register-content {
   align-self: center;
   height: auto
@@ -294,6 +298,7 @@ time {
 
 td, th {
   padding-block: 1em;
+  padding-inline: 1em;
 }
 
 .shotcut-container {
@@ -406,4 +411,17 @@ td, th {
 .upload-btn, .search-btn {
   width: 100px;
   height: 42px;
+}
+
+.record-img {
+  width: 400px;
+  min-height: 200px;
+  background-color: blueviolet;
+  margin: auto;
+}
+
+.record-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }

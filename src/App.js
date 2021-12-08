@@ -3,6 +3,7 @@ import Landing from './components/Landing';
 import Admin from './Admin'
 import DetailQR from './components/DetailQR';
 import Login from './components/Login';
+import ProductQR from './components/ProductQR';
 
 function App() {
 
@@ -11,7 +12,10 @@ function App() {
       <Switch>
         <Route path="/users/:id">
           <DetailQR />
-          </Route>
+        </Route>
+        <Route path="/products/:id">
+          <ProductQR />
+        </Route>
         <Route path="/admin">
           <Admin />
         </Route>

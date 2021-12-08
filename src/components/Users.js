@@ -7,11 +7,10 @@ import AlertBox from "./AlertBox";
 const User = () => {
 
     const [ users, setUsers ] = useState([])
-    const [noti, setNoti] = useState(null)
+    const [ noti, setNoti]  = useState(null)
     const [ alert, setAlert ] = useState(false)
     const [ confirmId, setConfirmId ] = useState(null)
     const [ totalPages, setTotalPages ] = useState(0)
-    // const [ page, setPage ] = useState(1)
 
     function useQuery() {
         return new URLSearchParams(useLocation().search);
@@ -93,14 +92,14 @@ const User = () => {
                                 <div>
                                     <span className="counts">{user.times}</span><span>Scans</span>
                                 </div>
-                                <Link to={`/admin/users/${user.vaccinateduser.id}`} className="detail-link">Detail</Link>
+                                <Link to={`/admin/users/${user.vaccinateduser.id}`} className="detail-edit-link">Detail</Link>
                                 <div>
                                     <img src={user.vaccinateduser.qrcode} alt="qrcode"/>
                                 </div>
                                 <div>
-                                    <a href={user.vaccinateduser.qrcode} download="qrcode.png" className="download-btn">Download</a>
+                                    <a href={user.vaccinateduser.qrcode} download={`${user.vaccinateduser.username}.png`} className="download-btn">Download</a>
                                     <div>
-                                        <button className="delete-btn" onClick={() => handleAlert(user.vaccinateduser.id)} >Delete</button>
+                                        <Link to={`/admin/customers/edit/${user.vaccinateduser.id}`} className="detail-edit-link">Edit</Link> | <button className="delete-btn" onClick={() => handleAlert(user.vaccinateduser.id)} >Delete</button>
                                     </div>
                                 </div>
                             </li>
@@ -113,7 +112,7 @@ const User = () => {
                         (Number(query.get('pages')) > 0) && <button onClick={prev} className="pag-btn">Previous</button>
                     }
                     {
-                        !(totalPages < ((Number(query.get('pages')) + 1) * 5)) &&  <button onClick={next} className="pag-btn">Next</button>
+                        !(totalPages <= ((Number(query.get('pages')) + 1) * 5)) &&  <button onClick={next} className="pag-btn">Next</button>
                     }
                 </div>
             </div> 

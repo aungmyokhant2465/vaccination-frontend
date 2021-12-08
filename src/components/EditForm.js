@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import vaccinatedUserService from "../services/vaccinatedUser";
+import { useParams } from 'react-router-dom';
 
 const CustomerForm = () => {
 
+    const params = useParams()
+
     const [ firstName, setFirstName ] = useState('')
-    const [ lastName, setLastName ] = useState('')
     const [ nrc, setNrc ] = useState('')
     const [ dob, setDob ] = useState('')
     const [ gender, setGender ] = useState('')
-    const [ address, setAddres ] = useState('')
+    const [ address, setAddress ] = useState('')
     const [ vaccineFirstDate, setVaccineFirstDate ] = useState('')
     const [ vaccineSecondDate, setVaccineSecondDate ] = useState('')
     const [ phone, setPhone ] = useState('')
@@ -20,6 +22,7 @@ const CustomerForm = () => {
     const [ company, setCompany ] = useState('')
     const [ joinDate, setJoinDate ] = useState('')
     const [ idNo, setIdNo ] = useState('')
+    const [ user, setUser ] = useState(null)
 
     const [ progress, setProgress ] = useState(false)
 
@@ -28,8 +31,9 @@ const CustomerForm = () => {
     const handleForm = async (e) => {
         e.preventDefault()
         let newVaccinatedUser = {
-            username: `${firstName} ${lastName}`, nrc, dob, gender, address, photo: null,
-            vaccineFirstDate, vaccineSecondDate, phone, note, position, department, company, joinDate, id_no: idNo
+            username: firstName, nrc, dob, gender, address,
+            vaccineFirstDate: vaccineFirstDate?vaccineFirstDate:null, vaccineSecondDate: vaccineSecondDate?vaccineSecondDate:null,
+            phone, note, position, department, company, joinDate, id_no: idNo
         }
         setProgress(true)
         try {
@@ -59,53 +63,66 @@ const CustomerForm = () => {
                 }
                 newVaccinatedUser = { ...newVaccinatedUser, recordCard: uploadedFile.file.filename }
             }
-            const result = await vaccinatedUserService.createVaccinatedUser(newVaccinatedUser)
+            const result = await vaccinatedUserService.editVaccinatedUser(params.id, newVaccinatedUser, photo? user.photo: null, recordCard? user.recordCard : null)
             setTimeout(() => {
                 setNoti({})
             }, 3000);
             setNoti({message: result.message, error: false})
-            setFirstName('')
-            setLastName('')
-            setNrc('')
-            setDob('')
-            setGender('')
-            setAddres('')
-            setVaccineFirstDate('')
-            setVaccineSecondDate('')
-            setPhone('')
-            setNote('')
-            setPhoto('')
-            setRecordCard('')
-            setPosition('')
-            setDepartment('')
-            setCompany('')
-            setJoinDate('')
-            setIdNo('')
         } catch(error) {
             console.error(error)
         }
         setProgress(false)
     }
 
+    useEffect(() => {
+        vaccinatedUserService.vaccinatedUser(params.id)
+            .then(res => {
+                setUser(res.data.vaccinateduser)
+                return res.data.vaccinateduser
+            })
+            .then((user) => {
+                setFirstName(user.username?user.username:'')
+                setNrc(user.nrc?user.nrc:'')
+                setDob(user.dob?user.dob:'')
+                setGender(user.gender?user.gender:'')
+                setAddress(user.address?user.address:'')
+                setVaccineFirstDate(user.vaccineFirstDate?user.vaccineFirstDate:'')
+                setVaccineSecondDate(user.vaccineSecondDate?user.vaccineSecondDate:'')
+                setPhone(user.phone?user.phone:'')
+                setNote(user.note?user.note:'')
+                setPosition(user.position?user.position:'')
+                setDepartment(user.department?user.department:'')
+                setCompany(user.company?user.company:'')
+                setJoinDate(user.joinDate?user.joinDate:'')
+                setIdNo(user.id_no?user.id_no:'')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }, [params.id])
+
+    if(!user) {
+        return (
+            <div>
+                <em>Loading...</em>
+            </div>
+        )
+    }
+
     return (
         <div className="container">
             <div className="form-header">
-                <span><span className="material-icons md-36">add_circle_outline</span><h2>Create New Staff</h2></span>
+                <span><span className="material-icons md-36">add_circle_outline</span><h2>Edit</h2></span>
             </div>
             <div className="form-main">
                 <section>
-                    <h3><span className="material-icons md-36 info">info</span> Enter information</h3>
+                    <h3><span className="material-icons md-36 info">info</span> Your information</h3>
                     <form onSubmit={handleForm} id="customer-form" encType="multipart/form-data">
                         <div className="form-group">
                             <label htmlFor="name">Name :</label>
-                            <div className="name-input">
-                                <input id="name" name="first-name" type="text" placeholder="first name"
-                                    value={firstName} onChange={({target}) => setFirstName(target.value)}
-                                />
-                                <input name="last-name" type="text" placeholder="last name"
-                                    value={lastName} onChange={({target}) => setLastName(target.value)}
-                                />
-                            </div>
+                            <input id="name" name="first-name" type="text" placeholder="Name"
+                                value={firstName} onChange={({target}) => setFirstName(target.value)}
+                            />
                         </div>
                         <div className="form-group">
                             <label htmlFor="photo">Photo :</label>
@@ -142,7 +159,7 @@ const CustomerForm = () => {
                         <div className="form-group">
                             <label htmlFor="address">Address :</label>
                             <input id="address" name="address" type="text" placeholder="Enter your address"
-                                value={address} onChange={({target}) => setAddres(target.value)}
+                                value={address} onChange={({target}) => setAddress(target.value)}
                             />
                         </div>
                         <div className="form-group">
@@ -194,15 +211,15 @@ const CustomerForm = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="note">Note :</label>
-                            <textarea id="note" value={note} onChange={({target}) => setNote(target.value)}></textarea>
+                            <label htmlFor="node">Note :</label>
+                            <textarea id="node" value={note} onChange={({target}) => setNote(target.value)}></textarea>
                         </div>
                     </form>
                     <div className="generator-group">
                         <span className="material-icons md-36 form">qr_code_2</span>
                         <button disabled={progress} type="submit" form="customer-form" className="btn">
                             {
-                                !progress ? 'QR Generate': 'Processing...'
+                                !progress ? 'Edit': 'Processing...'
                             }
                         </button>
                     </div>

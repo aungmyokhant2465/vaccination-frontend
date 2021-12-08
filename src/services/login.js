@@ -2,7 +2,7 @@
 import axios from "axios"
 import { token } from "./vaccinatedUser"
 import { BACKEND_URL } from '../constant'
-const baseUrl = `${BACKEND_URL}/users/`
+const baseUrl = `${BACKEND_URL}/users`
 
 const login = async credential => {
     const response = await axios.post(baseUrl+'/login', credential)

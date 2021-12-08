@@ -11,6 +11,11 @@ import CustomerForm from './components/CustomerForm';
 import Users from './components/Users';
 import Detail from './components/Detail';
 import Register from './components/Register';
+import EditForm from './components/EditForm';
+import ProductForm from './components/ProductForm';
+import Products from './components/Products';
+import Product from './components/Product';
+import ProductEdit from './components/ProductEdit';
 
 import { setToken } from './services/vaccinatedUser';
 
@@ -55,8 +60,23 @@ function Admin() {
             <Route path={`${path}/customers/create`}>
               <CustomerForm />
             </Route>
+            <Route path={`${path}/customers/edit/:id`}>
+              <EditForm />
+            </Route>
             <Route path={`${path}/customers`}>
               <Users />
+            </Route>
+            <Route path={`${path}/products/create`}>
+              <ProductForm />
+            </Route>
+            <Route path={`${path}/products/edit/:id`}>
+              <ProductEdit />
+            </Route>
+            <Route path={`${path}/products/:id`}>
+              <Product />
+            </Route>
+            <Route path={`${path}/products`}>
+              <Products />
             </Route>
             <Route path={`${path}/register`}>
               <Register />

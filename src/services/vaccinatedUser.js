@@ -33,6 +33,14 @@ const createVaccinatedUser = async (newVaccinatedUser) => {
     return response.data
 }
 
+const editVaccinatedUser = async (id, newVaccinatedUser, photo, recordCard) => {
+    const config = {
+        headers: { accessToken: token }
+    }
+    const response = await axios.put(baseUrl+'/'+id, { data: newVaccinatedUser, photo: photo, recordCard: recordCard }, config)
+    return response.data
+}
+
 const imageUpload = async (formData) => {
     const config = {
         headers: { accessToken: token }
@@ -62,18 +70,6 @@ const deleteVaccinatedUser = async (id) => {
     return response.data
 }
 
-// const firstAndSecondVaccinatedUsers = async () => {
-//     const config = {
-//         headers: { accessToken: token }
-//     }
-//     const response1 = await axios.get(baseUrl+'/first_vaccineted', config)
-//     const response2 = await axios.get(baseUrl+'/second_vaccinated', config)
-//     return {
-//         first: response1.data.data,
-//         second: response2.data.data
-//     }
-// }
-
 const vaccinated = async () => {
     const config = {
         headers: {accessToken: token}
@@ -89,7 +85,7 @@ const excelUpload = async (formData) => {
     const response = await axios.post(baseUrl+'/upload-excel', formData, config)
     return response.data
 }
-// %2F
+
 const findByNrc = async (nrc) => {
     const response = await axios.get(`${baseUrl}/find/${nrc.replace('/', '%2F')}`)
     return response.data
@@ -99,6 +95,7 @@ export default {
     vaccinatedUsers,
     vaccinatedUser,
     createVaccinatedUser,
+    editVaccinatedUser,
     incrCount,
     countUsers,
     deleteVaccinatedUser,

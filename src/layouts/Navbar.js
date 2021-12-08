@@ -20,18 +20,28 @@ const Navbar = () => {
             <div className="navbar-container">
                 <ul>
                     <li>
+                        <Link to="/admin/products/create">
+                            <span className="material-icons md-36">qr_code</span><span className="navbar-content">Product QR Generator</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/products?pages=0">
+                            <span className="material-icons md-36">inventory_2</span><span className="navbar-content">Products Management</span>
+                        </Link>
+                    </li>
+                    <li>
                         <Link to="/admin/customers/create">
-                            <span className="material-icons md-36">qr_code_2</span><span className="navbar-content">QR Generator</span>
+                            <span className="material-icons md-36">qr_code_2</span><span className="navbar-content">Staff QR Generator</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/admin/customers?pages=0">
-                            <span className="material-icons md-36">person</span><span className="navbar-content">User Management</span>
+                            <span className="material-icons md-36">person</span><span className="navbar-content">Staff Management</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/admin/import">
-                            <span className="material-icons md-36">summarize</span><span className="navbar-content">Import</span>
+                            <span className="material-icons md-36">summarize</span><span className="navbar-content">Import Staff Profile</span>
                         </Link>
                     </li>
                     <li>
